@@ -7,6 +7,7 @@ import type {
   OrganizationMembershipJSON,
   OrganizationResource,
   UpdateOrganizationParams,
+  SetOrganizationLogoParams,
 } from '@clerk/types';
 import { unixEpochToDate } from 'utils/date';
 
@@ -102,6 +103,17 @@ export class Organization extends BaseResource implements OrganizationResource {
       method: 'DELETE',
       path: `/organizations/${this.id}/memberships/${userId}`,
     }).then(res => new OrganizationMembership(res?.response as OrganizationMembershipJSON));
+  };
+
+  setLogo = async ({ file }: SetOrganizationLogoParams): Promise<OrganizationResource> => {
+    const body = new FormData();
+    body.append('file', file);
+
+    return await BaseResource._fetch({
+      path: `/organizations/${this.id}/logo`,
+      method: 'PUT',
+      body,
+    }).then(res => new Organization(res?.response as OrganizationJSON));
   };
 
   protected fromJSON(data: OrganizationJSON): this {

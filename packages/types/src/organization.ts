@@ -27,6 +27,7 @@ export interface OrganizationResource {
   inviteMember: (params: InviteMemberParams) => Promise<OrganizationInvitationResource>;
   updateMember: (params: UpdateMembershipParams) => Promise<OrganizationMembershipResource>;
   removeMember: (userId: string) => Promise<OrganizationMembershipResource>;
+  setLogo: (params: SetOrganizationLogoParams) => Promise<OrganizationResource>;
 }
 
 export interface GetMembershipsParams {
@@ -47,4 +48,8 @@ export interface UpdateMembershipParams {
 
 export interface UpdateOrganizationParams {
   name: string;
+}
+
+export interface SetOrganizationLogoParams {
+  file: Blob | File;
 }
